@@ -1,0 +1,28 @@
+$green-back: rgb(228, 246, 231);
+$brown: rgba(51, 41, 41, 1);
+
+
+.wrapper-center{
+  display: flex;
+  justify-content: center;
+}
+.basic-form{
+  background-color: $green-back;
+  border-radius: 5px;
+  padding: 10px;
+}
+.basic-form > h1{
+  text-align: center;
+}
+.basic-form > input {
+  width: 100%;
+  height: 2em;
+  margin-bottom: 10px;
+  padding: 3px;
+}
+.basic-form > button {
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
+  margin-top: 5px;
+}

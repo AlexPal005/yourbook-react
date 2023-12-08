@@ -1,0 +1,14 @@
+@import "./../../scss/variables";
+
+header{
+  height: 50px;
+  background-color: $brown;
+  padding: 0 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header > h2 {
+  font-family: sans-serif;
+  color: $green-back;
+}
