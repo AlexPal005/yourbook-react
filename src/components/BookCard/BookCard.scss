@@ -1,0 +1,35 @@
+@import './../../scss/variables';
+
+.book-card {
+  width: 200px;
+  height: 250px;
+  border: 1px solid grey;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.book-card:not(:last-child) {
+  margin-right: 30px;
+  margin-bottom: 30px;
+}
+
+.book-image {
+  width: 100%;
+  display: block;
+}
+
+.book-card > p {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.book-card > h5 {
+  color: green;
+  font-size: 24px;
+  font-family: sans-serif;
+  margin-top: 30px
+}

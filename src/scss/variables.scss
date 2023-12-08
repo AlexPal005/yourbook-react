@@ -8,11 +8,12 @@ $brown: rgba(51, 41, 41, 1);
 }
 .basic-form{
   background-color: $green-back;
-  border-radius: 5px;
-  padding: 10px;
+  border-radius: 10px;
+  padding: 20px;
 }
 .basic-form > h1{
   text-align: center;
+  margin-bottom: 10px;
 }
 .basic-form > input {
   width: 100%;
@@ -25,4 +26,6 @@ $brown: rgba(51, 41, 41, 1);
   left: 50%;
   transform: translate(-50%, 0);
   margin-top: 5px;
+  width: 100px;
+  height: 30px;
 }
