@@ -1,0 +1,70 @@
+@import "./../../scss/variables";
+
+.basket-wrapper {
+  background-color: $brown;
+  width: 600px;
+  padding: 40px;
+  margin-top: 50px;
+  border-radius: 20px;
+  margin-bottom: 50px;
+}
+
+.basket-wrapper > p {
+  color: white;
+  font-size: 30px;
+}
+
+.book-item {
+  background-color: $green-back;
+  padding: 17px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  height: 140px;
+}
+
+.book-item img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 5px;
+}
+
+.book-item > span:nth-child(1) {
+  color: $brown;
+  font-size: 20px;
+  width: 150px;
+  overflow: hidden;
+}
+
+.book-item > h5 {
+  color: green;
+  font-size: 24px;
+  font-family: sans-serif;
+}
+
+.book-item input {
+  width: 40px;
+  margin-left: 10px;
+}
+
+.book-item > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.basket-wrapper button {
+  width: 200px;
+  height: 40px;
+  margin-top: 20px;
+  cursor: pointer;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.basket-wrapper > div:last-child {
+  display: flex;
+  justify-content: center;
+}

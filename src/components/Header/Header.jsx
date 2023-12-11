@@ -1,7 +1,7 @@
 import './Header.scss'
 import './../../scss/variables.scss'
 import {FaRegUserCircle, FaShoppingBasket} from "react-icons/fa";
-import {useContext, useEffect} from "react";
+import {useContext} from "react";
 import {AuthContext} from "../../context/authContext.jsx";
 import {useNavigate} from "react-router-dom";
 
@@ -20,14 +20,14 @@ export const Header = () => {
             {
                 !currentUser ?
                     <div className="auth-header">
-                        <FaShoppingBasket className="user-icon"/>
+                        <FaShoppingBasket className="user-icon" onClick={()=>{navigate("/basket")}}/>
                         <span className="count-of-books">0</span>
                         <a href="/login">Увійти</a>
                         <a href="/registration">Реєстрація</a>
                     </div> :
                     <div className="auth-header exit-block">
                         <FaShoppingBasket className="user-icon" onClick={()=>{navigate("/basket")}}/>
-                        <span className="count-of-books">0</span>
+                        <span className="count-of-books">{JSON.parse(localStorage.getItem("basket"))?.length}</span>
                         <FaRegUserCircle className="user-icon"/>
                         <span onClick={exitHandler}>Вийти</span>
                     </div>
