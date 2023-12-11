@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import {useEffect, useState} from "react";
+import {MdDelete} from "react-icons/md";
 
 export const BookListItem = ({book, setUpdateSum}) => {
     const [countBooks, setCountBooks] = useState(1)
@@ -20,6 +21,16 @@ export const BookListItem = ({book, setUpdateSum}) => {
         setCountBooks(count)
     }, [book.count])
 
+    const deleteBook = () => {
+        let currBasket = JSON.parse(localStorage.getItem("basket"));
+        currBasket.forEach((currBook, index) => {
+            if (currBook.id === book.id) {
+                currBasket.splice(index, 1)
+            }
+        })
+        localStorage.setItem("basket", JSON.stringify(currBasket))
+        setUpdateSum(prev => prev + 1)
+    }
     return (
         <div className="book-item">
             <span>{book.title}</span>
@@ -36,6 +47,7 @@ export const BookListItem = ({book, setUpdateSum}) => {
                         defaultValue={book?.count ? book.count : 1}
                     />
                 </label>
+                <MdDelete className="delete-book" alt="Видалити" onClick={deleteBook}/>
             </div>
         </div>
     )

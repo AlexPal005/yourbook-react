@@ -7,6 +7,7 @@
   margin-top: 50px;
   border-radius: 20px;
   margin-bottom: 50px;
+  position: relative;
 }
 
 .basket-wrapper > p {
@@ -24,6 +25,7 @@
   align-items: center;
   cursor: pointer;
   height: 140px;
+  position: relative;
 }
 
 .book-item img {
@@ -67,4 +69,23 @@
 .basket-wrapper > div:last-child {
   display: flex;
   justify-content: center;
+}
+
+.basket-wrapper > span:nth-child(1){
+  position: absolute;
+  right: 30px;
+  top: 10px;
+  color: red;
+  cursor: pointer;
+}
+.basket-wrapper > span:nth-child(1):hover{
+  text-decoration: underline;
+}
+.delete-book{
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 25px;
+  height: 25px;
+  color: red;
 }

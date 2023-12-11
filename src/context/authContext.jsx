@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 export const AuthContext = createContext(null);
 // eslint-disable-next-line react/prop-types
 export const AuthContextProvider = ({children}) => {
-    const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('userId')) || null);
+    const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('user') || "[]") || null);
     const navigate = useNavigate()
     const login = async (inputs) => {
         // eslint-disable-next-line no-useless-catch
@@ -23,14 +23,14 @@ export const AuthContextProvider = ({children}) => {
 
     const logOut = async () => {
         // Clear local storage, log the action, and navigate to login page
-        localStorage.clear()
+        localStorage.setItem("user", "")
         console.log("storage cleared");
         setCurrentUser(null);
         navigate('/login');
     };
 
     useEffect(() => {
-        localStorage.setItem('userId', JSON.stringify(currentUser));
+        localStorage.setItem('user', JSON.stringify(currentUser));
     }, [currentUser]);
 
     return (

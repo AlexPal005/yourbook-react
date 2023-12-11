@@ -20,14 +20,22 @@ export const Header = () => {
             {
                 !currentUser ?
                     <div className="auth-header">
-                        <FaShoppingBasket className="user-icon" onClick={()=>{navigate("/basket")}}/>
-                        <span className="count-of-books">0</span>
+                        <FaShoppingBasket className="user-icon" onClick={() => {
+                            navigate("/basket")
+                        }}/>
+                        <span className="count-of-books">{(JSON.parse(localStorage.getItem("basket")))?.length ?
+                            (JSON.parse(localStorage.getItem("basket"))).length : 0}</span>
                         <a href="/login">Увійти</a>
                         <a href="/registration">Реєстрація</a>
                     </div> :
                     <div className="auth-header exit-block">
-                        <FaShoppingBasket className="user-icon" onClick={()=>{navigate("/basket")}}/>
-                        <span className="count-of-books">{JSON.parse(localStorage.getItem("basket"))?.length}</span>
+                        <FaShoppingBasket className="user-icon" onClick={() => {
+                            navigate("/basket")
+                        }}/>
+                        <span className="count-of-books">
+                            {(JSON.parse(localStorage.getItem("basket")))?.length ?
+                                (JSON.parse(localStorage.getItem("basket"))).length : 0}
+                        </span>
                         <FaRegUserCircle className="user-icon"/>
                         <span onClick={exitHandler}>Вийти</span>
                     </div>
