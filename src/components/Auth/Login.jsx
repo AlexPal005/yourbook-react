@@ -2,10 +2,11 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import './Auth.scss';
 import './../../scss/variables.scss';
+import axios from "axios";
 
 export const Login = () => {
     const [inputs, setInputs] = useState({
-        nickName: "",
+        email: "",
         password: ""
     });
     const [res, setRes] = useState(null);
@@ -14,7 +15,6 @@ export const Login = () => {
     const [errorNickName, setErrorNickName] = useState("Нікнейм не може бути пустим");
     const [errorPassword, setErrorPassword] = useState("Пароль не може бути пустим");
     const [isValid, setIsValid] = useState(false);
-    const navigate = useNavigate();
     //const {login} = useContext(AuthContext);
 
     useEffect(() => {
@@ -23,13 +23,14 @@ export const Login = () => {
         } else {
             setIsValid(true);
         }
+        console.log(inputs)
     }, [errorNickName, errorPassword]);
 
     const handleChange = (e) => {
         setInputs(prev => ({...prev, [e.target.name]: e.target.value}));
         setRes("");
         switch (e.target.name) {
-            case 'nickName':
+            case 'email':
                 if (e.target.value.length !== 0) {
                     setErrorNickName("");
                 } else {
@@ -50,7 +51,7 @@ export const Login = () => {
     };
     const handleBlur = (e) => {
         switch (e.target.name) {
-            case 'nickName':
+            case 'email':
                 setNickNameDirty(true);
                 break;
             case 'password':
@@ -63,11 +64,13 @@ export const Login = () => {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setRes("")
         try {
-            //await login(inputs);
+            const res = await axios.post("http://localhost:8081/login", inputs);
+            console.log(res);
         } catch (err) {
             setRes(err.response.data);
+            console.log(err)
         }
     };
     return (
@@ -77,7 +80,7 @@ export const Login = () => {
                     {(nickNameDirty && errorNickName) && <p className="error">{errorNickName}</p>}
                     <input type="text"
                            className={(nickNameDirty && errorNickName) ? ["input-color-blue", "error-input"].join(" ") : "input-color-blue"}
-                           placeholder="Логін" name="nickName" onChange={handleChange} onBlur={handleBlur}/><br/>
+                           placeholder="email" name="email" onChange={handleChange} onBlur={handleBlur}/><br/>
                     {(passwordDirty && errorPassword) && <p className="error">{errorPassword}</p>}
                     <input type="password"
                            className={(passwordDirty && errorPassword) ? ["input-color-blue", "error-input"].join(" ") : "input-color-blue"}
