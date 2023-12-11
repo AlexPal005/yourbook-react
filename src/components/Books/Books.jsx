@@ -1,63 +1,40 @@
 import './../../scss/variables.scss'
 import './Books.scss'
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {BookCard} from "../BookCard/BookCard.jsx";
+import axios from 'axios';
 
 export const Books = () => {
-    const [books, setBooks] = useState([
-        {
-            bookId: 1,
-            title: "MainBook",
-            description: "Interesting book",
-            price: 150,
-            photo: []
-        },
-        {
-            bookId: 1,
-            title: "MainBook",
-            description: "Interesting book",
-            price: 150,
-            photo: []
-        },
-        {
-            bookId: 1,
-            title: "MainBook",
-            description: "Interesting book",
-            price: 150,
-            photo: []
-        },
-        {
-            bookId: 1,
-            title: "MainBook",
-            description: "Interesting book",
-            price: 150,
-            photo: []
-        },
-        {
-            bookId: 1,
-            title: "MainBook",
-            description: "Interesting book",
-            price: 150,
-            photo: []
-        },
-        {
-            bookId: 1,
-            title: "MainBook",
-            description: "Interesting book",
-            price: 150,
-            photo: []
-        }
-    ])
+    const [books, setBooks] = useState([])
+
+    useEffect(() => {
+        axios.get('http://localhost:8081/book/getAll')
+            .then(res => {
+                setBooks(res.data)
+                console.log(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+    }, []);
 
     return (
         <div className="wrapper-center books-wrapper">
-            <div className="books">
-                {
-                    books.map(book => {
-                        return <BookCard key={book.bookId} book={book}/>
-                    })
-                }
-            </div>
+            {
+                books.length ?
+                    <div className="books">
+                        {
+                            books.map(book => {
+                                return <BookCard key={book.id} book={book}/>
+                            })
+                        }
+                    </div> :
+                    <h1>
+                        Нічого не знайдено!
+                    </h1>
+            }
+
         </div>
     )
 }

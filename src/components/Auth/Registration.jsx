@@ -1,55 +1,61 @@
 import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
 import './Auth.scss';
 import './../../scss/variables.scss';
+import axios from "axios";
+
 export const Registration = () => {
     const [inputs, setInputs] = useState({
         email: "",
-        nickName: "",
+        name: "",
+        surname: "",
         password: "",
         password2: ""
 
     });
     const [res, setRes] = useState("");
     const [checkTerms, setTerms] = useState(false);
-    const [nickNameDirty, setNickNameDirty] = useState(false);
+    const [name, setName] = useState(false);
+    const [surname, setSurname] = useState(false);
     const [emailDirty, setEmailDirty] = useState(false);
     const [passwordDirty, setPasswordDirty] = useState(false);
     const [password2Dirty, setPassword2Dirty] = useState(false);
-    const [errorNickName, setErrorNickName] = useState("Нікнейм не може бути пустим");
+    const [errorNickName, setErrorNickName] = useState("Ім'я не може бути пустим");
+    const [errorSurname, setErrorSurname] = useState("Прізвище не може бути пустим");
     const [errorEmail, setErrorEmail] = useState("Пошта не може бути пустою");
     const [errorPassword, setErrorPassword] = useState("Пароль не може бути пустим");
     const [error2Password, setError2Password] = useState("");
     const [isValid, setIsValid] = useState(false);
-    const navigate = useNavigate();
 
     useEffect(() => {
         if (errorNickName || errorEmail || errorPassword || error2Password) {
-            setIsValid(false);
+            setIsValid(false)
         } else {
-            setIsValid(true);
+            setIsValid(true)
         }
-    }, [errorNickName, errorEmail, errorPassword, error2Password]);
+    }, [errorNickName, errorEmail, errorPassword, error2Password])
 
     const handleChange = (e) => {
         setInputs(prev => ({...prev, [e.target.name]: e.target.value}));
         setRes("");
         switch (e.target.name) {
-            case 'nickName':
-                validateNickName(e);
-                break;
+            case 'name':
+                validateNickName(e)
+                break
+            case 'surname':
+                validateSurname(e)
+                break
             case 'email':
-                validateEmail(e);
-                break;
+                validateEmail(e)
+                break
             case 'password':
-                validatePassword(e);
-                break;
+                validatePassword(e)
+                break
             case 'password2':
-                validatePassword2(e);
-                break;
+                validatePassword2(e)
+                break
             default:
-                setRes("Помилка!");
-                break;
+                setRes("Помилка!")
+                break
         }
     };
     const validatePassword2 = (e) => {
@@ -73,44 +79,54 @@ export const Registration = () => {
         }
     };
     const validateNickName = (e) => {
-        const regex = /^[a-z0-9_.]+$/;
-        if (!regex.test(String(e.target.value).toLowerCase())) {
-            setErrorNickName('Нікнейм має бути написаним латиницею з цифрами розділеними "." або "_"');
+        if(!e.target.value){
+            setErrorNickName('Ім\'я не може бути пустим!');
         }
         else {
             setErrorNickName("");
         }
     };
+    const validateSurname = (e) => {
+        if(!e.target.value){
+            setErrorSurname('Ім\'я не може бути пустим!');
+        }
+        else {
+            setErrorSurname("")
+        }
+    }
     const validateEmail = (e) => {
         const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (!regex.test(String(e.target.value).toLowerCase())) {
             setErrorEmail('Пошта введена некоректно');
         } else {
-            setErrorEmail("");
+            setErrorEmail("")
         }
-    };
+    }
     const handleChangeCheck = (e) => {
-        setTerms(e.target.checked);
+        setTerms(e.target.checked)
     };
     const handleBlur = (e) => {
         switch (e.target.name) {
-            case 'nickName':
-                setNickNameDirty(true);
-                break;
+            case 'name':
+                setName(true);
+                break
+            case 'surname':
+                setSurname(true);
+                break
             case 'email':
                 setEmailDirty(true);
-                break;
+                break
             case 'password':
                 setPasswordDirty(true);
-                break;
+                break
             case 'password2':
                 setPassword2Dirty(true);
-                break;
+                break
             default:
                 setRes("Помилка!");
-                break;
+                break
         }
-    };
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!checkTerms) {
@@ -118,16 +134,10 @@ export const Registration = () => {
         } else {
             setRes("");
             try {
-               // const res = await axios.post("/auth/confirmation", inputs);
+                const res = await axios.post("http://localhost:8081/register", inputs);
                 console.log(res);
-                navigate("/confirmation", {
-                    state: {
-                        result: res.data.key,
-                        inputs
-                    }
-                });
             } catch (e) {
-                setRes(e.response.data);
+                setRes(e.response.data.message);
                 console.log(e);
             }
         }
@@ -135,14 +145,23 @@ export const Registration = () => {
 
     return (
         <div className="wrapper-center wrapper-auth">
-            <form className="basic-form">
+            <form className="basic-form auth-form">
                 <h1>Реєстрація</h1>
-                {(nickNameDirty && errorNickName) && <p className="error">{errorNickName}</p>}
+                {(name && errorNickName) && <p className="error">{errorNickName}</p>}
                 <input required
-                       className={(nickNameDirty && errorNickName) ? ["input-color-blue", "error-input"].join(" ") : "input-color-blue"}
+                       className={(name && errorNickName) ? ["input-color-blue", "error-input"].join(" ") : "input-color-blue"}
                        type="text"
-                       placeholder="Нікнейм"
-                       name="nickName"
+                       placeholder="Ім'я"
+                       name="name"
+                       onChange={handleChange}
+                       onBlur={handleBlur}
+                /><br/>
+                {(surname && errorSurname) && <p className="error">{errorSurname}</p>}
+                <input required
+                       className={(surname && errorSurname) ? ["input-color-blue", "error-input"].join(" ") : "input-color-blue"}
+                       type="text"
+                       placeholder="Прізвище"
+                       name="surname"
                        onChange={handleChange}
                        onBlur={handleBlur}
                 /><br/>
@@ -180,8 +199,10 @@ export const Registration = () => {
                     />
                     Згоден з умовами користувача
                 </label><br/>
+                <button disabled={!isValid} type="submit" onClick={handleSubmit}
+                        className="button-form button-register">Надіслати
+                </button>
                 {res && <p className="error">{res}</p>}
-                <button disabled={!isValid} type="submit" onClick={handleSubmit} className="button-form button-register">Надіслати</button>
             </form>
         </div>
     );
