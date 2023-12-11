@@ -1,8 +1,8 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import './Auth.scss';
 import './../../scss/variables.scss';
-import axios from "axios";
+import {AuthContext} from "../../context/authContext.jsx";
 
 export const Login = () => {
     const [inputs, setInputs] = useState({
@@ -15,7 +15,8 @@ export const Login = () => {
     const [errorNickName, setErrorNickName] = useState("Нікнейм не може бути пустим");
     const [errorPassword, setErrorPassword] = useState("Пароль не може бути пустим");
     const [isValid, setIsValid] = useState(false);
-    //const {login} = useContext(AuthContext);
+    const {login} = useContext(AuthContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (errorNickName || errorPassword) {
@@ -66,25 +67,24 @@ export const Login = () => {
         e.preventDefault();
         setRes("")
         try {
-            const res = await axios.post("http://localhost:8081/login", inputs);
-            console.log(res);
+            await login(inputs)
+            navigate("/")
         } catch (err) {
             setRes(err.response.data);
-            console.log(err)
         }
     };
     return (
         <div className="wrapper-center wrapper-auth">
             <form className="basic-form auth-form">
                 <h1>Увійти</h1>
-                    {(nickNameDirty && errorNickName) && <p className="error">{errorNickName}</p>}
-                    <input type="text"
-                           className={(nickNameDirty && errorNickName) ? ["input-color-blue", "error-input"].join(" ") : "input-color-blue"}
-                           placeholder="email" name="email" onChange={handleChange} onBlur={handleBlur}/><br/>
-                    {(passwordDirty && errorPassword) && <p className="error">{errorPassword}</p>}
-                    <input type="password"
-                           className={(passwordDirty && errorPassword) ? ["input-color-blue", "error-input"].join(" ") : "input-color-blue"}
-                           placeholder="Пароль" name="password" onChange={handleChange} onBlur={handleBlur}/><br/>
+                {(nickNameDirty && errorNickName) && <p className="error">{errorNickName}</p>}
+                <input type="text"
+                       className={(nickNameDirty && errorNickName) ? ["input-color-blue", "error-input"].join(" ") : "input-color-blue"}
+                       placeholder="email" name="email" onChange={handleChange} onBlur={handleBlur}/><br/>
+                {(passwordDirty && errorPassword) && <p className="error">{errorPassword}</p>}
+                <input type="password"
+                       className={(passwordDirty && errorPassword) ? ["input-color-blue", "error-input"].join(" ") : "input-color-blue"}
+                       placeholder="Пароль" name="password" onChange={handleChange} onBlur={handleBlur}/><br/>
                 {res && <p className="error">{res}</p>}
                 <button disabled={!isValid} type="submit" onClick={handleSubmit} className="button-form">Увійти</button>
             </form>

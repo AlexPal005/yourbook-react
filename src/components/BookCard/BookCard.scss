@@ -10,6 +10,8 @@
   padding: 10px;
   cursor: pointer;
   border-radius: 10px;
+  background-color: $green-back;
+  position: relative;
 }
 
 .book-card:not(:last-child) {
@@ -32,4 +34,12 @@
   font-size: 24px;
   font-family: sans-serif;
   margin-top: 30px
+}
+.card-basket{
+  position: absolute;
+  right: 20px;
+  bottom: 25px;
+  width: 30px;
+  height: 30px;
+  color: $brown;
 }

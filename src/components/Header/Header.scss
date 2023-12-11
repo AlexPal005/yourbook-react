@@ -8,13 +8,50 @@ header{
   justify-content: space-between;
   align-items: center;
 }
-header > h2 {
-  font-family: sans-serif;
+.logo > a {
   color: $green-back;
+  font-size: 36px;
+  text-decoration: none;
 }
 .user-icon{
   width: 30px;
   height: 30px;
   color: $green-back;
   cursor: pointer;
+}
+.auth-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 200px;
+  position: relative;
+}
+.auth-header > a,span{
+  cursor: pointer;
+  font-size: 18px;
+  color: white;
+}
+.auth-header > a{
+  text-decoration: none;
+}
+.exit-block{
+  width: 150px;
+}
+.logo{
+  display: flex;
+  width: 250px;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo > a:nth-child(2){
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+.count-of-books{
+  color: red;
+  position: absolute;
+  top: -5px;
+  left: 28px;
+  font-weight: bold;
 }
