@@ -11,7 +11,6 @@ export const Books = () => {
         axios.get('http://localhost:8081/book/getAll')
             .then(res => {
                 setBooks(res.data)
-                console.log(res.data)
             })
             .catch(err => {
                 console.log(err)
