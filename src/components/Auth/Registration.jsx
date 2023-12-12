@@ -1,7 +1,8 @@
 import {useEffect, useState} from "react";
 import './Auth.scss';
 import './../../scss/variables.scss';
-import axios from "axios";
+import axios from "./../../Axios.js";
+import {useNavigate} from "react-router-dom";
 
 export const Registration = () => {
     const [inputs, setInputs] = useState({
@@ -25,6 +26,7 @@ export const Registration = () => {
     const [errorPassword, setErrorPassword] = useState("Пароль не може бути пустим");
     const [error2Password, setError2Password] = useState("");
     const [isValid, setIsValid] = useState(false);
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (errorNickName || errorEmail || errorPassword || error2Password) {
@@ -134,8 +136,9 @@ export const Registration = () => {
         } else {
             setRes("");
             try {
-                const res = await axios.post("http://localhost:8081/register", inputs);
+                const res = await axios.post("/register", inputs);
                 console.log(res);
+                navigate("/login")
             } catch (e) {
                 setRes(e.response.data.message);
                 console.log(e);

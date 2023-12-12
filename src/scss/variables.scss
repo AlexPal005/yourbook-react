@@ -5,6 +5,8 @@ $brown: rgba(51, 41, 41, 1);
 .wrapper-center{
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 .basic-form{
   background-color: $green-back;

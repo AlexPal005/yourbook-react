@@ -2,13 +2,13 @@ import './../../scss/variables.scss'
 import './Books.scss'
 import {useEffect, useState} from "react";
 import {BookCard} from "../BookCard/BookCard.jsx";
-import axios from 'axios';
+import axios from './../../Axios.js';
 
 export const Books = () => {
     const [books, setBooks] = useState([])
 
     useEffect(() => {
-        axios.get('http://localhost:8081/book/getAll')
+        axios.get('/book/getAll')
             .then(res => {
                 setBooks(res.data)
             })

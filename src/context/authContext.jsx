@@ -1,5 +1,5 @@
 import {createContext, useEffect, useState} from "react";
-import axios from "axios";
+import axios from "./../Axios.js";
 import {jwtDecode} from "jwt-decode";
 import {useNavigate} from "react-router-dom";
 
@@ -11,7 +11,7 @@ export const AuthContextProvider = ({children}) => {
     const login = async (inputs) => {
         // eslint-disable-next-line no-useless-catch
         try {
-            const res = await axios.post("http://localhost:8081/login", inputs);
+            const res = await axios.post("/login", inputs);
             const jwtToken = res.data;
             const decodeUser = jwtDecode(jwtToken);
             console.log(decodeUser)

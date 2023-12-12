@@ -2,7 +2,8 @@ import {useContext, useEffect, useState} from "react";
 import "./Basket.scss"
 import {BookListItem} from "./BookListItem.jsx";
 import {AuthContext} from "../../context/authContext.jsx";
-import axios from "axios";
+import axios from "./../../Axios.js";
+import {ConfirmOrder} from "./ConfirmOrder.jsx";
 
 export const Basket = () => {
 
@@ -10,6 +11,8 @@ export const Basket = () => {
     const [sum, setSum] = useState(0)
     const [updateSum, setUpdateSum] = useState(0)
     const {currentUser} = useContext(AuthContext)
+    const [showConfirm, setShowConfirm] = useState(false)
+    const [resultOrder, setResultOrder] = useState({})
 
     useEffect(() => {
         if (JSON.parse(localStorage.getItem("basket"))) {
@@ -32,18 +35,22 @@ export const Basket = () => {
     }
 
     const handleAddOrder = () => {
-        const resultOrder = {
+        const currbooks = JSON.parse(localStorage.getItem("basket"))
+        const booksId = []
+        currbooks.forEach(book => {
+            if (book?.count && book?.count > 1) {
+                booksId.push(book.id)
+            } else {
+                booksId.push(book.id)
+            }
+        })
+        setResultOrder({
             totalSum: sum,
             status: "В обробці!",
-            userId: currentUser.userId
-        }
-        axios.post('http://localhost:8081/order/create', resultOrder)
-            .then((res) => {
-                clearBasket()
-            }).catch(err => {
-            console.log(err)
+            userId: currentUser.userId,
+            booksId: booksId
         })
-        console.log(currentUser)
+        setShowConfirm(true)
     }
     return (
         <div className="wrapper-center">
@@ -59,11 +66,19 @@ export const Basket = () => {
 
                         <p>Сума: {sum} грн</p>
                         <div>
-                            <button onClick={handleAddOrder}>Замовити</button>
+                            <button onClick={handleAddOrder}>Замовити
+                            </button>
                         </div>
+
                     </div> :
                     <h3 className="error">Кошик пустий! Перейдіть в каталог та додайте книги!</h3>
 
+            }
+            {
+                showConfirm && <ConfirmOrder resultOrder={resultOrder}
+                                             clearBasket ={clearBasket}
+                                             setShowConfirm = {setShowConfirm}
+                />
             }
         </div>
     )
