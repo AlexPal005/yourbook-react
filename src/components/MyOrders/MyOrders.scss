@@ -1,0 +1,23 @@
+@import "./../../scss/variables";
+
+.order-card {
+  background-color: $green-back;
+  width: 700px;
+  height: 100px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.title-orders {
+  margin: 20px 0;
+}
+
+.order-card p {
+  font-size: 20px;
+  padding: 5px;
+}

@@ -36,7 +36,7 @@ export const Header = () => {
                             {(JSON.parse(localStorage.getItem("basket")))?.length ?
                                 (JSON.parse(localStorage.getItem("basket"))).length : 0}
                         </span>
-                        <FaRegUserCircle className="user-icon"/>
+                        <FaRegUserCircle className="user-icon" onClick={()=>{navigate("/myOrders")}}/>
                         <span onClick={exitHandler}>Вийти</span>
                     </div>
 

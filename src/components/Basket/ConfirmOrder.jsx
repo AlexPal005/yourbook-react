@@ -22,6 +22,10 @@ export const ConfirmOrder = ({resultOrder, clearBasket, setShowConfirm}) => {
         }
     }, [currUser])
 
+    useEffect(() => {
+       console.log(user)
+    }, [user])
+
     const clear = () => {
         clearBasket()
         setShowConfirm(false)

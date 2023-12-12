@@ -5,6 +5,7 @@ import {Registration} from "./components/Auth/Registration.jsx";
 import {Header} from "./components/Header/Header.jsx";
 import {Books} from "./components/Books/Books.jsx";
 import {Basket} from "./components/Basket/Basket.jsx";
+import {MyOrders} from "./components/MyOrders/MyOrders.jsx";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
                 <Route path="/registration" element={<Registration/>}/>
                 <Route path="/" element={<Books/>}/>
                 <Route path="/basket" element={<Basket/>}/>
+                <Route path="/myOrders" element={<MyOrders/>}/>
             </Routes>
 
         </>
