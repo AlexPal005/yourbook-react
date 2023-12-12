@@ -1,5 +1,5 @@
 import "./ConfirmOrder.scss"
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import axios from "../../Axios.js";
 import {AuthContext} from "../../context/authContext.jsx";
 
@@ -8,6 +8,7 @@ export const ConfirmOrder = ({resultOrder, clearBasket, setShowConfirm}) => {
     const [user, setUser] = useState({})
     const currUser = useContext(AuthContext)
     const [message, setMessage] = useState("")
+    const addressRef = useRef(null)
 
     useEffect(() => {
         if (currUser?.currentUser?.userId) {
@@ -27,22 +28,29 @@ export const ConfirmOrder = ({resultOrder, clearBasket, setShowConfirm}) => {
     }
 
     const confirmOrder = () => {
-        console.log(resultOrder)
         setUser(prev => {
-            return {prev}
+            const newData = prev;
+            newData.address = addressRef.current.value
+            return newData
         })
-        axios.put(`/user/${currUser.currentUser?.userId}`,
-        )
-        axios.post('/order/create', resultOrder)
-            .then((res) => {
-                setMessage("Успішно створено замовлення!")
-                setTimeout(clear, 5000)
+        axios.put(`/user/update/${currUser.currentUser?.userId}`, user)
+            .then(() => {
+                axios.post('/order/create', resultOrder)
+                    .then((res) => {
+                        setMessage("Успішно створено замовлення!")
+                        setTimeout(clear, 5000)
 
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        setMessage("Помилка! Спробуйте ще раз!")
+                    })
             })
             .catch(err => {
                 console.log(err)
-                setMessage(err.data)
+                setMessage("Помилка! Спробуйте ще раз!")
             })
+
     }
     return (
         <div className="confirm-order">
@@ -58,7 +66,7 @@ export const ConfirmOrder = ({resultOrder, clearBasket, setShowConfirm}) => {
                                 <h3>Адреса: {user.adress}</h3> :
                                 <div className="address-block">
                                     <h4>Уведіть адресу доставки</h4>
-                                    <input type="text" placeholder="Адреса"/>
+                                    <input type="text" placeholder="Адреса" ref={addressRef}/>
                                 </div>
                         }
                         <div className="confirm-button-block">
