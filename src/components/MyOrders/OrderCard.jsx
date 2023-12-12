@@ -1,6 +1,7 @@
 import "./MyOrders.scss"
 /* eslint-disable react/prop-types */
 export const OrderCard = ({order}) => {
+
     return(
         <div className="order-card">
             <div>
