@@ -2,7 +2,6 @@ import {useContext, useEffect, useState} from "react";
 import "./Basket.scss"
 import {BookListItem} from "./BookListItem.jsx";
 import {AuthContext} from "../../context/authContext.jsx";
-import axios from "./../../Axios.js";
 import {ConfirmOrder} from "./ConfirmOrder.jsx";
 
 export const Basket = () => {
@@ -53,7 +52,7 @@ export const Basket = () => {
         setShowConfirm(true)
     }
     return (
-        <div className="wrapper-center">
+        <div className="wrapper-center basket">
             {
                 books?.length ?
                     <div className="basket-wrapper">
@@ -71,15 +70,20 @@ export const Basket = () => {
                         </div>
 
                     </div> :
-                    <h3 className="error">Кошик пустий! Перейдіть в каталог та додайте книги!</h3>
+                    <h1 className="error">Кошик пустий! Перейдіть в каталог та додайте книги!</h1>
 
             }
             {
+                !currentUser?.userId &&
+                    <h3 className="error">Необхідно зареєструватись!</h3>
+            }
+            {
                 showConfirm && <ConfirmOrder resultOrder={resultOrder}
-                                             clearBasket ={clearBasket}
-                                             setShowConfirm = {setShowConfirm}
+                                             clearBasket={clearBasket}
+                                             setShowConfirm={setShowConfirm}
                 />
             }
+
         </div>
     )
 }

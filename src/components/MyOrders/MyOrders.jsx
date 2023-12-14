@@ -3,6 +3,7 @@ import {AuthContext} from "../../context/authContext.jsx";
 import axios from "../../Axios.js";
 import "./MyOrders.scss"
 import {OrderCard} from "./OrderCard.jsx";
+import {UserInfo} from "./UserInfo.jsx";
 
 export const MyOrders = () => {
     const [orders, setOrders] = useState([])
@@ -19,7 +20,7 @@ export const MyOrders = () => {
     }, [user])
 
     return (
-        <div className="wrapper-center">
+        <div className="wrapper-center my-orders-wrapper">
             <h1 className="green title-orders">Мої замовлення</h1>
             <div className=" my-orders">
                 {
@@ -28,6 +29,7 @@ export const MyOrders = () => {
                     })
                 }
             </div>
+            <UserInfo/>
         </div>
     )
 }

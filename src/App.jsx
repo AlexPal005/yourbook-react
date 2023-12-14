@@ -35,7 +35,7 @@ function App() {
                 <Route path="/basket" element={<Basket/>}/>
                 <Route path="/myOrders" element={<MyOrders/>}/>
                 {
-                    user.role === "USER" &&
+                    user.role === "ADMIN" &&
                     <>
                         <Route path="/adminPage" element={<AdminPage/>}/>
                         <Route path="/adminPage/*" element={<AdminPage/>}/>

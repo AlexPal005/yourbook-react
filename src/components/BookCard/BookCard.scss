@@ -14,7 +14,7 @@
   position: relative;
 }
 
-.book-card:not(:last-child) {
+.book-card {
   margin-right: 30px;
   margin-bottom: 30px;
 }
@@ -43,4 +43,7 @@
   width: 30px;
   height: 30px;
   color: $brown;
+}
+.red-busket{
+  color: red
 }

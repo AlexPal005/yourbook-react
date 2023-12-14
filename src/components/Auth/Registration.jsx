@@ -25,16 +25,19 @@ export const Registration = () => {
     const [errorEmail, setErrorEmail] = useState("Пошта не може бути пустою");
     const [errorPassword, setErrorPassword] = useState("Пароль не може бути пустим");
     const [error2Password, setError2Password] = useState("");
+    const [number, setNumber] = useState(false);
+    const [errorNumber, setErrorNumber] = useState("Номер телефону не може бути пустим");
+
     const [isValid, setIsValid] = useState(false);
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (errorNickName || errorEmail || errorPassword || error2Password) {
+        if (errorNickName || errorEmail || errorPassword || error2Password || errorNumber) {
             setIsValid(false)
         } else {
             setIsValid(true)
         }
-    }, [errorNickName, errorEmail, errorPassword, error2Password])
+    }, [errorNickName, errorEmail, errorPassword, error2Password, errorNumber])
 
     const handleChange = (e) => {
         setInputs(prev => ({...prev, [e.target.name]: e.target.value}));
@@ -45,6 +48,9 @@ export const Registration = () => {
                 break
             case 'surname':
                 validateSurname(e)
+                break
+            case 'number':
+                validateNumber(e)
                 break
             case 'email':
                 validateEmail(e)
@@ -81,18 +87,23 @@ export const Registration = () => {
         }
     };
     const validateNickName = (e) => {
-        if(!e.target.value){
+        if (!e.target.value) {
             setErrorNickName('Ім\'я не може бути пустим!');
-        }
-        else {
+        } else {
             setErrorNickName("");
         }
     };
-    const validateSurname = (e) => {
-        if(!e.target.value){
-            setErrorSurname('Ім\'я не може бути пустим!');
+    const validateNumber = (e) => {
+        if (!e.target.value) {
+            setErrorNumber('Номер не може бути пустим!');
+        } else {
+            setErrorNumber("");
         }
-        else {
+    };
+    const validateSurname = (e) => {
+        if (!e.target.value) {
+            setErrorSurname('Ім\'я не може бути пустим!');
+        } else {
             setErrorSurname("")
         }
     }
@@ -114,6 +125,9 @@ export const Registration = () => {
                 break
             case 'surname':
                 setSurname(true);
+                break
+            case 'number':
+                setNumber(true);
                 break
             case 'email':
                 setEmailDirty(true);
@@ -165,6 +179,15 @@ export const Registration = () => {
                        type="text"
                        placeholder="Прізвище"
                        name="surname"
+                       onChange={handleChange}
+                       onBlur={handleBlur}
+                /><br/>
+                {(number && errorNumber) && <p className="error">{errorNumber}</p>}
+                <input required
+                       type="text"
+                       className={(number && errorNumber) ? ["input-color-blue", "error-input"].join(" ") : "input-color-blue"}
+                       placeholder="Номер телефону"
+                       name="number"
                        onChange={handleChange}
                        onBlur={handleBlur}
                 /><br/>

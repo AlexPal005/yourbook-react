@@ -36,3 +36,13 @@
 .confirm-order > div{
   text-align: center;
 }
+.confirm-order table, th, td {
+  border: 1px solid $brown;
+  border-collapse: collapse;
+  text-align: left;
+  padding: 5px;
+  background-color: $green-back;
+}
+.confirm-order table{
+  width: 400px;
+}
